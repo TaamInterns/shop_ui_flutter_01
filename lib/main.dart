@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:shop_ui/panel.dart';
+import 'package:shop_ui/profile.dart';
 
 import 'iteminfo.dart';
+import 'iteminfo2.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,7 +34,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin<MyHomePage> {
 
-
+  GlobalKey<ScaffoldState> stateScaffold =GlobalKey();
 
   // Colors elements
   Color darkText = Colors.deepPurpleAccent[100];
@@ -40,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage>
   Color lightBackground = Color(0xff7c959c);
   Color darkBackground = Color(0xff2a283f);
   int activeTab = 0;
+  Color drawercolor=Colors.white;
   List categories = [
     " Fan ",
     "Shoes",
@@ -68,6 +71,8 @@ class _MyHomePageState extends State<MyHomePage>
 
     return Scaffold(
       backgroundColor: widget.dark == false ? lightBackground : darkBackground,
+       endDrawer: _myDrawer(wi,he),
+      key: stateScaffold,
       body: SafeArea(
           child: Container(
             width: wi,
@@ -101,9 +106,28 @@ class _MyHomePageState extends State<MyHomePage>
 
   //////////////// make Widgets
 
+  Widget _myDrawer(var wi, var he){
 
+    return Container(
+      width: wi*.25,
+      decoration: BoxDecoration(
+        color: drawercolor,
+        boxShadow: [BoxShadow(color: drawercolor,blurRadius: 20,spreadRadius: 5,offset: Offset(-4, 0))]
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          _drawerItem(wi,Icons.person,1 ),
+          _drawerItem(wi,Icons.shopping_cart,2 ),
+          _drawerItem(wi,Icons.info_outline,3 ),
+        ],
+      ),
+    )
+    ;
+//morteza roozbehi @mr_roz
+  }
 
-  Widget _darkMoodIconText(double wi, double he, bool dark) {
+  Widget _darkMoodIconText(var wi, var he, bool dark) {
 
 
     final _darkMoodIcon = Container(
@@ -148,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
 
-  Widget _shopTextIcon(double wi, double he, bool dark) {
+  Widget _shopTextIcon(var wi, var he, bool dark) {
     return Container(
       height: wi * .16,
       child: Row(
@@ -165,15 +189,14 @@ class _MyHomePageState extends State<MyHomePage>
           ),
           GestureDetector(
             onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Panel()),
-              );
+           stateScaffold.currentState.isEndDrawerOpen? 
+           Navigator.pop(context):
+           stateScaffold.currentState.openEndDrawer();
             },
             child: Container(
               margin: EdgeInsets.only(right: wi * .02),
               child: Icon(Icons.filter_list,
-                  color: dark == false ? lightText : darkText),
+                  color: dark == false ? lightText : lightText),
             ),
           ),
         ],
@@ -181,8 +204,35 @@ class _MyHomePageState extends State<MyHomePage>
     );
   }
 
+  Widget _drawerItem(wi,IconData icon,var id){
 
-  Widget _searchBox(double wi, double he, bool dark) {
+    return   GestureDetector(
+      onTap: () { ///todo/////////////
+        //Future.delayed(Duration(seconds: 4)).then((value) => Navigator.of(context).pop());
+        if(id==1){
+          Navigator.pop(context);
+          Navigator.of(context).push(PageRouteBuilder(
+            pageBuilder: (_,__,___)=>Profile(),transitionDuration: Duration(seconds: 3),));
+        }
+        // if(id==2){
+        //   Navigator.pop(context);
+        //   Navigator.of(context).push(MaterialPageRoute(builder:(context)=>Profile()))
+        // }
+        // if(id==3){
+        //   Navigator.pop(context);
+        //   Navigator.of(context).push(MaterialPageRoute(builder:(context)=>Profile()))
+        // }
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: wi*.05),
+        padding:   EdgeInsets.all(wi*.017),
+        decoration: BoxDecoration(shape: BoxShape.circle,color: lightBackground,),
+        child: Icon(icon,size: wi*.09,color: Colors.white,),),
+    );
+  }
+
+
+  Widget _searchBox(var wi, var he, bool dark) {
     return Container(
       constraints: BoxConstraints(maxHeight: he * .99),
       decoration: BoxDecoration(
@@ -193,6 +243,7 @@ class _MyHomePageState extends State<MyHomePage>
         top: wi * .03,
       ),
       child: TextField(
+        autofocus:false ,
         controller: searchBoxController,
         style: TextStyle(
             fontSize: wi * .06,
@@ -218,7 +269,7 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
 
-  Widget _tabBar(double wi, double he, bool dark) {
+  Widget _tabBar(var wi, var he, bool dark) {
 
     return Container(
       margin: EdgeInsets.only(
@@ -261,7 +312,7 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
 
-  Widget _tabBarView(double wi, double he, bool dark) {
+  Widget _tabBarView(var wi, var he, bool dark) {
 
     return Container(
       height: he * .7,
@@ -285,7 +336,7 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
 
-  Widget  _panelsBack(double wi, double he, bool dark){
+  Widget  _panelsBack(var wi, var he, bool dark){
     var wi = MediaQuery.of(context).size.width;
     var he = MediaQuery.of(context).size.height;
 
@@ -319,13 +370,26 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
 
-  Widget _fanList(double wi, double he, bool dark){
+  Widget  _fanList(var wi, var he, bool dark){
+
+    List info=[["Vornado","Electric","75"],["fan2","light","65"],["comfan","Electric","35"],["Vornado","light","40"]];
+
 
     return Container(
       child: ListView.builder(
-        itemCount: categories.length,
+        itemCount: info.length,
         itemBuilder: (context, index) {
           return InkWell(
+            onTap: () {
+
+              // Navigator.of(context).push(MaterialPageRoute(builder:(context)=> Iteminfo(
+              //   info[index][0],
+              //   info[index][1],
+              //   info[index][2],
+              //  )));
+              Navigator.of(context).push(MaterialPageRoute(builder:(context)=>MyApp2()));
+            },
+
             child: Stack(
               children: [
                 Container(
@@ -387,12 +451,12 @@ class _MyHomePageState extends State<MyHomePage>
                           //morteza roozbehi
                           Expanded(
                               child: Container(
-                                child: Column(
+                                child: Column(       // info item
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
-                                      "Vornado",
+                                      "${info[index][0]}",
                                       style: TextStyle(
                                           color: dark == false
                                               ? Colors.black54
@@ -401,7 +465,7 @@ class _MyHomePageState extends State<MyHomePage>
                                           fontWeight: FontWeight.w700),
                                     ),
                                     Text(
-                                      "Electric",
+                                      info[index][1],
                                       style: TextStyle(
                                         color: dark == false
                                             ? Colors.black54
@@ -410,7 +474,7 @@ class _MyHomePageState extends State<MyHomePage>
                                       ),
                                     ),
                                     Text(
-                                      '75\$',
+                                      "${info[index][2]} \$",
                                       style: TextStyle(
                                         color: dark == false
                                             ? Colors.deepOrange
@@ -449,10 +513,7 @@ class _MyHomePageState extends State<MyHomePage>
                 ),
               ],
             ),
-            onTap: () {
-              print(index);
-              Navigator.of(context).push(MaterialPageRoute(builder:(context)=>MyApp2()));
-            },
+
           );
         },
       ),
