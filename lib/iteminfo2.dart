@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,8 @@ class Iteminfo extends StatefulWidget {
 }
 
 class _IteminfoState extends State<Iteminfo> {
-
+ // GlobalKey<ScaffoldState> stateScaffold =GlobalKey();
+  //GlobalKey<ScaffoldState>scaf =GlobalKey();
   ///////////////// Colors
   Color backPanel = Color(0xffEEBDAC);
   Color bottomPanel = Colors.white;
@@ -24,6 +26,11 @@ class _IteminfoState extends State<Iteminfo> {
   Color buttomBy = Colors.black26;
   Color Textinfo =Colors.black54;
   bool bookmark=false;
+  // void showSnak() {
+  //   stateScaffold.currentState.showSnackBar(new SnackBar(
+  //       content: new Text("salam")
+  //   ));
+  // }
 
   ////////////////////
 List images=[
@@ -43,6 +50,7 @@ var active=0;
     var  iconsSize =  wi*.08;
 
     return SafeArea(
+
       child: Scaffold(
         backgroundColor:backPanel ,
         body: Container(
@@ -106,7 +114,9 @@ var active=0;
               print("bookmark");
               setState(() {
                 bookmark==false? bookmark=true:bookmark=false;
+
               });
+           //  showSnak();
             },//morteza roozbehi @mr_roz
             child: bookmark==false?Container(
                 decoration: BoxDecoration(shape: BoxShape.circle,),

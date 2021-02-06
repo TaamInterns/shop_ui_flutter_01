@@ -24,6 +24,7 @@ dependencies:
 
   flutter_switch: ^0.0.2
   carousel_slider: ^2.3.1
+  intro_views_flutter: ^2.8.2
 
   flutter:
     sdk: flutter
@@ -68,15 +69,18 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: leyla
+      fonts:
+        - asset: fonts/leyla_0.ttf
+#    - family: danstevis
+#      fonts:
+#        - asset: fonts/danstevis.otf   iransans.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+    - family: iransans
+      fonts:
+        - asset: fonts/iransans.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

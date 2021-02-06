@@ -43,7 +43,7 @@ class _ProfileState extends State<Profile> {
     var he = MediaQuery.of(context).size.height;
 
       return Scaffold(
-        backgroundColor:Colors.transparent,
+
            body: SafeArea(
               child: Container(
                  height:he ,
@@ -52,7 +52,7 @@ class _ProfileState extends State<Profile> {
                         children: [
 
                         Align(alignment: Alignment.topCenter,
-                         child:_pictureAndCoverText(wi),
+                         child:_pictureAndCoverText(wi,he),
                 ), // pictureAndCoverText
 
                         Align(alignment: Alignment.topCenter,
@@ -67,8 +67,7 @@ class _ProfileState extends State<Profile> {
                   child:_iconSetting(wi) ,
                 ), //iconSetting
 
-                        Align(alignment: Alignment.center,
-               child: _centerText(wi),), // centerText
+                // centerText
 
                         Align(
                  alignment: Alignment.bottomCenter,
@@ -88,8 +87,9 @@ class _ProfileState extends State<Profile> {
     return  Container(
 
       width: wi,
-      height: he*.5,
+      height: he*.49,
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(wi*.1),topRight:Radius.circular(wi*.1) ),
         color: Colors.white,
       ),
       // color: Colors.white,
@@ -138,9 +138,9 @@ class _ProfileState extends State<Profile> {
         margin: EdgeInsets.only(left: wi*.5,top: wi*.2,right: wi*.15),
         height:wi*.25 ,
         decoration: BoxDecoration(
-            boxShadow: [BoxShadow(color: Colors.lightBlue,spreadRadius: 2,blurRadius: 10,offset: Offset(2, 3))],
+            boxShadow: [BoxShadow(color: Colors.lightGreen,spreadRadius: 5,blurRadius: 10,offset: Offset(2, 3))],
             shape: BoxShape.circle),
-        child: Icon(Icons.settings,size: wi*.1,),
+        child: Icon(Icons.settings,size: wi*.1,color: Colors.white,),
 
       ),
     );
@@ -154,11 +154,11 @@ class _ProfileState extends State<Profile> {
     final  _styleText =TextStyle(fontSize: wi*.04,fontWeight: FontWeight.w600,color: Colors.white);
 
     return Container(
-      // color: Colors.indigo,
-      height:wi*.37 ,
+
+      height:wi*.46 ,
       width: wi,
       // color: Colors.lightBlue,
-      margin: EdgeInsets.only(top: wi*.30),
+      margin: EdgeInsets.only(top: wi*.51),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -193,7 +193,7 @@ class _ProfileState extends State<Profile> {
 
 
 
-  Widget _pictureAndCoverText(wi){
+  Widget _pictureAndCoverText(wi,he){
     return Container(
       decoration: BoxDecoration(
           color: Colors.blue,
@@ -203,7 +203,7 @@ class _ProfileState extends State<Profile> {
           )
       ),
       // color: Colors.lightBlue,
-      height: wi*.7,
+      height: he*.53,
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
@@ -222,10 +222,11 @@ class _ProfileState extends State<Profile> {
 
     //_aboutme(this.icon,this.text,this.wi,this._styleText);
     return Container(
-      margin: EdgeInsets.only(left: 25,),
+      color: Colors.black26,
+      margin: EdgeInsets.only(left: wi*.03 ),
       child: Row(children: [
         Icon(icon,color: Colors.white,size: wi*.05,),
-        SizedBox(width: wi*.03,),
+        SizedBox(height: wi*.02,width: wi*.02,),
         Text(text,style: _styleText,)
       ],),
     );
@@ -272,7 +273,7 @@ class _ProfileState extends State<Profile> {
           width: weImage,
 
           decoration: BoxDecoration(
-
+            color: Colors.black12,
             borderRadius: BorderRadius.all(Radius.circular(wi*.04)),
             image:DecorationImage(
               fit: BoxFit.fill,
@@ -283,15 +284,44 @@ class _ProfileState extends State<Profile> {
         ), //morteza roozbehi @mr_roz
         Align(alignment: Alignment.bottomCenter,
         child: Container(
-          margin: EdgeInsets.all(wi*.02),
+          height: wi*.3,
+
+          //color: Colors.lightGreen,
+         // margin: EdgeInsets.all(wi*.07),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("$index *",style: TextStyle(fontSize: wi*.05),),
-              Text("Fan Turbo $index",style: TextStyle(fontSize: wi*.05)),
+
+              Container(
+                padding: EdgeInsets.all(wi*.05),
+                child:  Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  Text("s2536"),
+                  Text("${25*2+index}"),
+                  Text(" ${index+2} *"),
+
+                ],),
+              ),
+
+              Container(
+                padding: EdgeInsets.all(wi*.04),
+                child:  Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                  Text(": مدل"),
+                  Text(": قيمت"),
+                  Text(" : تعداد"),
+
+                ],),
+              ),
+
+
 
             ],
-          ),),),
+          )
+        ),),
       ],),
 
       //morteza roozbehi @mr_roz
